@@ -1,0 +1,65 @@
+---
+const {
+  text,
+  image = false,
+  video = false,
+  imageAlign,
+  background = false,
+} = Astro.props;
+---
+
+<section
+  class:list={[
+    {
+      "py-16 md:py-20 lg:py-28 bg-neutral-100": background,
+      "my-16 md:my-20 lg:my-28": !background,
+    },
+  ]}
+>
+  <div class="container">
+    <div
+      class="grid grid-cols-1 lg:grid-cols-2 gap-y-6 gap-x-10 xl:gap-16 items-center"
+    >
+      <div
+        class:list={[
+          "w-full",
+          {
+            "lg:order-2": imageAlign === "right",
+          },
+        ]}
+      >
+        {
+          image && !video && (
+            <img
+              src={image}
+              alt="Golf image"
+              class="w-full block rounded-2xl aspect-4/3 object-cover"
+            />
+          )
+        }
+        {
+          video && (
+            <video
+              class="w-full block rounded-2xl object-cover aspect-4/3"
+              playsinline
+              autoplay
+              muted
+              loop
+            >
+              <source src={video} type="video/mp4" />
+            </video>
+          )
+        }
+      </div>
+      <div
+        class:list={[
+          "w-full prose lg:prose-lg",
+          {
+            "lg:order-1": imageAlign === "right",
+          },
+        ]}
+        set:html={text}
+      />
+    </div>
+  </div>
+</section>

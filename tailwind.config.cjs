@@ -22,6 +22,7 @@ module.exports = {
     extend: {
       container: {
         padding: "20px",
+        center: true,
       },
       colors: {},
       fontFamily: {
@@ -29,6 +30,14 @@ module.exports = {
       },
       height: {
         hero: "500px",
+      },
+      aspectRatio: {
+        "16/9": "16/9",
+        "4/3": "4/3",
+      },
+      flex: {
+        3: "3 0 0%",
+        5: "5 0 0%",
       },
     },
   },
