@@ -32,8 +32,8 @@ const sortedPosts = home.posts ? await session.advanced.rawQuery(home.posts.quer
           ))
         }
       </ol>
-      <PostList posts={sortedPosts} client:only />
+      <PostList posts={sortedPosts} client:only="lit" />
     </div>
   </section>
-  <Sections sections={home.sections} client:only />
+  <Sections sections={home.sections} client:only="lit" />
 </BaseLayout>
