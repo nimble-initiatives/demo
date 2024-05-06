@@ -1,39 +1,26 @@
 ---
 import store from "@/store/index";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import Hero from "@/components/landing/Hero.astro";
-import { PostList } from "@/components/landing/PostList";
-import { Sections } from "@/components/landing/Sections";
-
+import Hero from "@/components/poc/Hero.astro";
 // Get the home page content
 const session = store.openSession();
 const home = await session
-  .query({ indexName: 'Content/ByUrl' })
-  .whereEquals('url', Astro.url.pathname)
+  .query({ indexName: "Content/ByUrl" })
+  .whereEquals("url", Astro.url.pathname)
   .firstOrNull();
 
 // Get all labels
-const labels = await session.query({ collection: 'labels'}).all();
-
-// Get selected posts
-const sortedPosts = home.posts ? await session.advanced.rawQuery(home.posts.query).all() : [];
+const labels = await session.query({ collection: "labels" }).all();
 ---
 
 <BaseLayout>
-  <Hero heading={home.heading} />
-  <section>
-    <div class="px-8 md:px-12 mx-auto max-w-7xl py-12 lg:px-32">
-      <ol role="list" class="flex flex-wrap gap-3">
-        {
-          labels.map((tag) => (
-            <li class="inline-flex items-center uppercase mx-auto hover:text-blue-500 text-xs font-medium text-black">
-              <a href={`/tags/${tag.name}`}>{tag.name}</a>
-            </li>
-          ))
-        }
-      </ol>
-      <PostList posts={sortedPosts} client:only="lit" />
-    </div>
-  </section>
-  <Sections sections={home.sections} client:only="lit" />
-</BaseLayout>
+  <Hero
+    size="small"
+    align="center"
+    heading="Nästa generations cms"
+    text="Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Integer posuere erat a ante venenatis dapibus posuere velit aliquet."
+    image="https://images.unsplash.com/photo-1500932334442-8761ee4810a7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    video="https://cdn.shopify.com/videos/c/vp/3c341ae1d8b3490ea0ea6d9682984e2a/3c341ae1d8b3490ea0ea6d9682984e2a.HD-1080p-7.2Mbps-19604077.mp4"
+  />
+</BaseLayout>;
+
