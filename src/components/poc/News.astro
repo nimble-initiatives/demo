@@ -1,0 +1,56 @@
+---
+// Experimented with grid. If-statements turned out messy but result seems to be working great. Might rework in the future.
+const { style = 1 } = Astro.props; // Style 1-4
+var itemClass = "bg-zinc-200 rounded-xl col-span-12 p-10 pt-52";
+const fakeItems = [
+  {
+    title: "Maecenas sed diam eget risus varius blandit magna",
+    text: "Nullam quis risus eget urna mollis ornare vel eu leo. Maecenas faucibus mollis interdum. Donec sed odio dui.",
+    image:
+      "https://images.unsplash.com/photo-1500932334442-8761ee4810a7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  },
+  {
+    title: "Cras mattis consectetur purus sit amet fermentum.",
+    text: "Maecenas sed diam eget risus varius blandit sit amet non magna. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.",
+    image:
+      "https://images.unsplash.com/photo-1500932334442-8761ee4810a7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  },
+  {
+    title: "Penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
+    text: "Aenean lacinia bibendum nulla sed consectetur. Nullam quis risus eget urna mollis ornare vel eu leo.",
+    image:
+      "https://images.unsplash.com/photo-1500932334442-8761ee4810a7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  },
+];
+---
+
+<section class="my-16 md:my-20 lg:my-28">
+  <div class="container">
+    <h2 class="font-bold text-2xl md:text-3xl lg:text-4xl mb-6">Aktuellt</h2>
+    <div
+      class="w-full grid grid-cols-12 auto-rows-max gap-y-10 lg:gap-x-12 row-span"
+    >
+      {
+        fakeItems.map((item, index) => (
+          <div class="col-span-full lg:col-span-4">
+            <img
+              src={item.image}
+              alt=""
+              class="block w-full h-auto rounded-xl mb-5"
+            />
+            <h3 class="text-2xl font-bold mb-3 leading-tight">{item.title}</h3>
+            <p>{item.text}</p>
+            <p class="mt-4">
+              <a
+                href="#"
+                class="font-bold underline underline-offset-4 hover:no-underline"
+              >
+                Läs artikel
+              </a>
+            </p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
