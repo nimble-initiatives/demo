@@ -4,6 +4,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import Hero from "@/components/poc/Hero.astro";
 import Content from "@/components/poc/Content.astro";
 import Bento from "@/components/poc/Bento.astro";
+import RichText from "@/components/poc/Rich-text.astro";
 // Get the home page content
 const session = store.openSession();
 const home = await session
@@ -17,7 +18,7 @@ const labels = await session.query({ collection: "labels" }).all();
 
 <BaseLayout>
   <Hero
-    size="small"
+    size="large"
     align="center"
     heading="Nästa generations cms"
     text="Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Integer posuere erat a ante venenatis dapibus posuere velit aliquet."
@@ -36,5 +37,6 @@ const labels = await session.query({ collection: "labels" }).all();
     video="https://cdn.shopify.com/videos/c/vp/3c341ae1d8b3490ea0ea6d9682984e2a/3c341ae1d8b3490ea0ea6d9682984e2a.HD-1080p-7.2Mbps-19604077.mp4"
   />
   <Bento />
+  <RichText />
 </BaseLayout>;
 
