@@ -10,10 +10,10 @@ import Footer from "@/components/global/Footer.astro";
   </head>
   <body class="bg-white flex flex-col">
     <Navigation />
-    <main class="flex-grow"><slot /></main>
+    <main id="main" class="flex-grow"><slot /></main>
     <Footer />
     <script>
-      import { ready } from '@strifeapp/strife';
+      import { ready } from "@strifeapp/strife";
       ready();
     </script>
   </body>

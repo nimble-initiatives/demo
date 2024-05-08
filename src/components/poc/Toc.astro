@@ -1,0 +1,77 @@
+<section class="my-16 md:my-20 lg:my-28">
+  <div class="container">
+    <div class="bg-zinc-200 p-5 md:p-10 max-w-5xl">
+      <p class="font-bold text-xl md:text-2xl lg:text-3xl">Innehåll</p>
+
+      <ol class="mt-5 space-y-2" id="toc"></ol>
+    </div>
+  </div>
+</section>
+
+<style></style>
+
+<script>
+  // Get all h2 elements inside #main
+  var h2Elements = document.querySelectorAll("#main h2");
+  var aClass = "font-bold hover:underline hover:underline-offset-4";
+
+  // Get the ol element with id 'toc'
+  var tocList = document.getElementById("toc");
+
+  // Create a fragment to hold the list items temporarily
+  var fragment = document.createDocumentFragment();
+
+  // Loop through each h2 element
+  h2Elements.forEach(function (h2, h2Index) {
+    // Create a new list item
+    var listItem = document.createElement("li");
+
+    // Create a link element
+    var link = document.createElement("a");
+    link.className = aClass;
+
+    // Set the link's href attribute to "#" + the h2's id
+    h2.setAttribute("id", "h2-" + h2Index);
+    link.setAttribute("href", "#h2-" + h2Index);
+
+    // Set the link's text content to the h2's text content
+    link.textContent = h2Index + 1 + ". " + h2.textContent;
+
+    // Append the link to the list item
+    listItem.appendChild(link);
+
+    // Get all h3 elements until the next h2
+    var nextElement = h2.nextElementSibling;
+    var subList = document.createElement("ol");
+    subList.className = "pl-8 space-y-2 mt-2";
+
+    var h3Counter = 0;
+
+    while (nextElement && nextElement.tagName !== "H2") {
+      if (nextElement.tagName === "H3") {
+        h3Counter++;
+        var subListItem = document.createElement("li");
+        var subLink = document.createElement("a");
+        subLink.className = aClass;
+        nextElement.setAttribute("id", "h3-" + h2Index + "-" + h3Counter);
+        subLink.setAttribute("href", "#h3-" + h2Index + "-" + h3Counter);
+        subLink.textContent =
+          h2Index + 1 + "." + h3Counter + ". " + nextElement.textContent;
+        subListItem.appendChild(subLink);
+        subList.appendChild(subListItem);
+      }
+      nextElement = nextElement.nextElementSibling;
+    }
+
+    // Append the sublist to the list item if it has any items
+    if (subList.childNodes.length > 0) {
+      listItem.appendChild(subList);
+    }
+
+    // Append the list item to the fragment
+    fragment.appendChild(listItem);
+  });
+
+  // Append the fragment to the ol element
+  tocList.appendChild(fragment);
+</script>
