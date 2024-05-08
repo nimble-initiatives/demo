@@ -33,6 +33,7 @@ module.exports = {
       },
       aspectRatio: {
         "16/9": "16/9",
+        "2/1": "2/1",
         "4/3": "4/3",
       },
       flex: {
