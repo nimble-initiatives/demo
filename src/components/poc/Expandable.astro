@@ -1,0 +1,82 @@
+---
+const { background = false } = Astro.props;
+---
+
+<section
+  x-data="{ open: false }"
+  class:list={[
+    {
+      "py-16 md:py-20 lg:py-28 bg-zinc-200": background,
+      "my-16 md:my-20 lg:my-28": !background,
+    },
+  ]}
+>
+  <div class="container">
+    <div class="w-full prose">
+      <h2>
+        Sed posuere consectetur est at lobortis pellentesque ornare sem lacinia
+      </h2>
+      <p>
+        Aenean lacinia bibendum nulla sed consectetur. Nullam id dolor id nibh
+        ultricies vehicula ut id elit. Nulla vitae elit libero, a pharetra
+        augue. Nullam id dolor id nibh ultricies vehicula ut id elit. Nullam
+        quis risus eget urna mollis ornare vel eu leo.
+      </p>
+      <p>
+        Donec ullamcorper nulla non metus auctor fringilla. Aenean lacinia
+        bibendum nulla sed consectetur. Cras justo odio, dapibus ac facilisis
+        in, egestas eget quam. Aenean eu leo quam. Pellentesque ornare sem
+        lacinia quam venenatis vestibulum. Donec ullamcorper nulla non metus
+        auctor fringilla. Maecenas sed diam eget risus varius blandit sit amet
+        non magna.
+      </p>
+      <div :class="{'block': open, 'hidden': !open}" class="prose mt-8">
+        <p>
+          Aenean lacinia bibendum nulla sed consectetur. Nullam id dolor id nibh
+          ultricies vehicula ut id elit. Nulla vitae elit libero, a pharetra
+          augue. Nullam id dolor id nibh ultricies vehicula ut id elit. Nullam
+          quis risus eget urna mollis ornare vel eu leo.
+        </p>
+        <p>
+          Donec ullamcorper nulla non metus auctor fringilla. Aenean lacinia
+          bibendum nulla sed consectetur. Cras justo odio, dapibus ac facilisis
+          in, egestas eget quam. Aenean eu leo quam. Pellentesque ornare sem
+          lacinia quam venenatis vestibulum. Donec ullamcorper nulla non metus
+          auctor fringilla. Maecenas sed diam eget risus varius blandit sit amet
+          non magna.
+        </p>
+        <p>
+          Aenean lacinia bibendum nulla sed consectetur. Nullam id dolor id nibh
+          ultricies vehicula ut id elit. Nulla vitae elit libero, a pharetra
+          augue. Nullam id dolor id nibh ultricies vehicula ut id elit. Nullam
+          quis risus eget urna mollis ornare vel eu leo.
+        </p>
+        <p>
+          Donec ullamcorper nulla non metus auctor fringilla. Aenean lacinia
+          bibendum nulla sed consectetur. Cras justo odio, dapibus ac facilisis
+          in, egestas eget quam. Aenean eu leo quam. Pellentesque ornare sem
+          lacinia quam venenatis vestibulum. Donec ullamcorper nulla non metus
+          auctor fringilla. Maecenas sed diam eget risus varius blandit sit amet
+          non magna.
+        </p>
+      </div>
+      <p :class="{'block': !open, 'hidden': open}">
+        <span
+          class="font-bold underline underline-offset-4 hover:no-underline cursor-pointer"
+          @click="open = !open"
+        >
+          Läs mer
+        </span>
+      </p>
+
+      <p :class="{'block': open, 'hidden': !open}">
+        <span
+          class="font-bold underline underline-offset-4 hover:no-underline cursor-pointer"
+          @click="open = !open"
+        >
+          Läs mindre
+        </span>
+      </p>
+    </div>
+  </div>
+</section>
