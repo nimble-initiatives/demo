@@ -1,13 +1,8 @@
 ---
 import store from "@/store/index";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import Hero from "@/components/poc/Hero.astro";
-import Content from "@/components/poc/Content.astro";
-import Bento from "@/components/poc/Bento.astro";
-import News from "@/components/poc/News.astro";
-import Toc from "@/components/poc/Toc.astro";
-import Expandable from "@/components/poc/Expandable.astro";
-import RichText from "@/components/poc/Rich-text.astro";
+import Sections from "@/components/poc/Sections.js";
+
 // Get the home page content
 const session = store.openSession();
 const home = await session
@@ -15,33 +10,14 @@ const home = await session
   .whereEquals("url", Astro.url.pathname)
   .firstOrNull();
 
-// Get all labels
-const labels = await session.query({ collection: "labels" }).all();
+if(home.sections.some((section) => section["@strife"].template === "nyheter")) {
+  const news = await session.advanced.rawQuery(
+    home.sections.find((section) => section["@strife"].template === "nyheter").content.query
+  ).all();
+  home.sections.find((section) => section["@strife"].template === "nyheter").content.documents = news;
+}
 ---
 
 <BaseLayout>
-  <Hero
-    size="small"
-    align="center"
-    heading="Nästa generations cms"
-    text="Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Integer posuere erat a ante venenatis dapibus posuere velit aliquet."
-    image="https://images.unsplash.com/photo-1500932334442-8761ee4810a7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-    video="https://cdn.shopify.com/videos/c/vp/3c341ae1d8b3490ea0ea6d9682984e2a/3c341ae1d8b3490ea0ea6d9682984e2a.HD-1080p-7.2Mbps-19604077.mp4"
-  />
-  <Toc />
-  <Expandable />
-  <Content
-    text="<h2>Vi ser till att världen rör sig framåt</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p><p>Maecenas sed diam eget risus varius blandit sit amet non magna. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>"
-    imageAlign="right"
-    image="https://images.unsplash.com/photo-1500932334442-8761ee4810a7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-    background={true}
-  />
-  <News />
-  <Content
-    text="<h2>Vi ser till att världen rör sig framåt</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p><p>Maecenas sed diam eget risus varius blandit sit amet non magna. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>"
-    imageAlign="left"
-    video="https://cdn.shopify.com/videos/c/vp/3c341ae1d8b3490ea0ea6d9682984e2a/3c341ae1d8b3490ea0ea6d9682984e2a.HD-1080p-7.2Mbps-19604077.mp4"
-  />
-  <Bento style={4} />
-  <RichText align="left" />
+  <Sections sections={home.sections} client:load />
 </BaseLayout>
