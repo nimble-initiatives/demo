@@ -89,7 +89,7 @@ export default class Hero extends LitElement {
   ` : ''}
 
   ${this.video?.__media ? html`
-    <video class="w-full h-full object-cover" playsinline poster="${this.video?.poster?.source?.url ?? nothing}" ?controls=${this.video?.controls} ?muted=${this.video?.muted} ?loop=${this.video?.loop} ?autoplay=${this.video?.playing}>
+    <video class="w-full h-full object-cover" playsinline ?controls=${this.video?.controls} muted ?loop=${this.video?.loop} ?autoplay=${this.video?.playing}>
       <source src="${this.video.url}#t=${this.video.startTime}" type="video/mp4" />
     </video>
   ` : ''}

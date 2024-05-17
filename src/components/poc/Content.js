@@ -68,7 +68,7 @@ export default class Content extends LitElement {
       ` : ''}
 
       ${this.video?.__media ? html`
-        <video class="w-full block rounded-2xl object-cover aspect-2/1 lg:aspect-4/3" playsinline poster="${this.video?.poster?.source?.url ?? nothing}" ?controls=${this.video?.controls} ?muted=${this.video?.muted} ?loop=${this.video?.loop} ?autoplay=${this.video?.playing}>
+        <video class="w-full block rounded-2xl object-cover aspect-2/1 lg:aspect-4/3" playsinline poster="${this.video?.poster?.source?.url ?? nothing}" ?controls=${this.video?.controls} muted ?loop=${this.video?.loop} ?autoplay=${this.video?.playing}>
           <source src="${this.video.url}#t=${this.video.startTime}" type="video/mp4" />
         </video>
       ` : ''}

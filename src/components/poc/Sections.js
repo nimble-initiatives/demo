@@ -3,7 +3,6 @@ import { repeat } from 'lit/directives/repeat.js';
 import './Hero.js';
 import './Toc.js';
 import './Content.js';
-import './Expandable.js';
 import './News.js';
 import './Bento.js';
 import './RichText.js'
@@ -59,16 +58,14 @@ export default class Sections extends LitElement {
               .background=${!!+item.background}
             ></poc-content>
           `;
-        case 'expanderbar':
-          return html`<poc-expandable .text=${item.text} .background=${!!+item.background}></poc-expandable>`;
         case 'nyheter':
           return html`<poc-news heading=${item.heading} .items=${item.content?.documents}></poc-news>`;
         case 'bento':
           return html`<poc-bento .style=${Number(item.style)} .items=${item.items}></poc-bento>`;
         case 'text':
-          return html`<poc-rich-text align="${item.align}" .text=${item.content}></poc-rich-text>`;
+          return html`<poc-rich-text align="${item.align}" .background=${!!+item.background} .text=${item.content}></poc-rich-text>`;
         default:
-          return html`<p>Default content</p>`;
+          return html`<p>Template not found: ${item['@strife'].template}</p>`;
       }
     });
   }

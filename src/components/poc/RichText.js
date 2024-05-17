@@ -10,22 +10,32 @@ export default class RichText extends LitElement {
 `;
   static properties = {
     align: { type: String },
+    background: { type: Boolean },
     text: { type: String }
   };
 
   constructor() {
     super();
     this.align = 'center';
+    this.background = false;
     this.text = '';
   }
 
   render() {
     return html`
-      <section class="my-16 md:my-20 lg:my-28">
+      <section class=${classMap({
+        'py-16': this.background,
+        'md:py-20': this.background,
+        'lg:py-28': this.background,
+        'bg-zinc-200': this.background,
+        'my-16': !this.background,
+        'md:my-20': !this.background,
+        'lg:my-28': !this.background,
+      })}>
         <div class="container">
           <div class=${classMap({
             "prose": true,
-            "text-center": this.align === "center"
+            "text-center": this.align === "center",
             })}>
             ${unsafeHTML(this.text)}
           </div>

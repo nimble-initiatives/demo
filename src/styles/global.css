@@ -49,3 +49,9 @@ html {
 .prose {
   @apply max-w-5xl;
 }
+
+details {
+  & > summary {
+    @apply font-bold underline underline-offset-4 hover:no-underline cursor-pointer;
+  }
+}

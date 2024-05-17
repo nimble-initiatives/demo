@@ -8,7 +8,8 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "deploy": "vercel deploy --prod"
   },
   "dependencies": {
     "@astrojs/lit": "^4.0.1",
