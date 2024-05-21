@@ -39,7 +39,7 @@ export default defineConfig({
       https: true
     },
     ssr: {
-      noExternal: ['@strifeapp/strife', '@strifeapp/image']
+      noExternal: ['@strifeapp/strife', '@strifeapp/image', '@strifeapp/picture']
     }
   },
   adapter: vercel()

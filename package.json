@@ -22,6 +22,7 @@
     "@sentry/astro": "^8.1.0",
     "@spotlightjs/astro": "^1.0.20",
     "@strifeapp/image": "^0.0.1-alpha.1",
+    "@strifeapp/picture": "^0.0.2-alpha.1",
     "@strifeapp/strife": "^0.2.19-alpha",
     "@strifeapp/style": "^0.0.1-alpha.2",
     "@tailwindcss/aspect-ratio": "^0.4.2",
