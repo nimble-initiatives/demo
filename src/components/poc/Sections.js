@@ -52,7 +52,7 @@ export default class Sections extends LitElement {
           return html`
             <poc-content
               .text=${item.text}
-              image="${item.image?.desktop.source.url}"
+              .image=${item.image}
               .video=${item.video}
               imageAlign="${item.imageAlign}"
               .background=${!!+item.background}
