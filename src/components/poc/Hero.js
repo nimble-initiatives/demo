@@ -73,6 +73,7 @@ export default class Hero extends LitElement {
         ${this.heading}
       </h1>
       <p class="max-w-2xl text-lg mb-7">${this.text}</p>
+      ${this.cta?.text && this.cta?.href ? html`
       <p class="max-w-2xl">
         <a
           href=${this.cta.href}
@@ -80,7 +81,7 @@ export default class Hero extends LitElement {
           target=${this.cta.target === '_blank' ? '_blank' : nothing}
           >${this.cta.text}</a
         >
-      </p>
+      </p>` : ''}
     </div>
   </div>
 

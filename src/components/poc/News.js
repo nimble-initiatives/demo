@@ -29,11 +29,17 @@ export default class News extends LitElement {
               this.items?.map((item, index) => {
                 return html`
                   <div class="col-span-full lg:col-span-4">
-                    <img
-                      src="${item.image?.source.url}"
-                      alt=""
-                      class="block w-full h-auto rounded-xl mb-5 lg:aspect-2/1 aspect-4/3 object-cover"
-                    />
+                  <picture>
+                    <source srcset="${item.image?.tabletList?.source?.url}"
+                            media="(max-width: 1024px)"
+                            width="728" height="546"
+                            data-property-media="tablet">
+                    <source srcset="${item.image?.desktopList?.source?.url}"
+                            media="(min-width: 1023px)"
+                            width="466" height="233"
+                            data-property-media="desktop">
+                    <img src="${item.image?.desktopList?.source?.url}" loading="lazy" alt="" width="466" height="233" class="block w-full h-auto rounded-xl mb-5 lg:aspect-2/1 aspect-4/3 object-cover">
+                  </picture>
                     <h3 class="text-2xl font-bold mb-3 leading-tight">${item.heading}</h3>
                     <p>${item.text}</p>
                     <p class="mt-4">

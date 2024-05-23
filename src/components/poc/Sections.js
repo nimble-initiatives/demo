@@ -1,11 +1,13 @@
 import { LitElement, html } from 'lit';
 import { repeat } from 'lit/directives/repeat.js';
+import { subscribe, ready } from '/Users/marcus/Projects/private/strife.nosync/wieldy/src/sdk/js/src/packages/strife/index.js';
 import './Hero.js';
 import './Toc.js';
 import './Content.js';
 import './News.js';
 import './Bento.js';
-import './RichText.js'
+import './RichText.js';
+
 export default class Sections extends LitElement {
 
   static properties = {
@@ -18,13 +20,18 @@ export default class Sections extends LitElement {
   }
 
   firstUpdated() {
-    import('@strifeapp/strife').then((strife) => {
-      this.unsubscribe = strife.subscribe((data) => {
-        this.sections = data.sections;
-      });
-      strife.ready();
-    });
+    console.log('Sections firstUpdated');
+    this.unsubscribe = subscribe((data) => this.sections = [...data.sections]);
+    ready();
+    // import('@strifeapp/strife').then((strife) => {
+    //   this.unsubscribe = strife.subscribe((data) => {
+    //     this.sections = data.sections;
+    //   });
+    //   strife.ready();
+    // });
   }
+
+
 
   disconnectedCallback() {
     super.disconnectedCallback();
@@ -32,7 +39,9 @@ export default class Sections extends LitElement {
   }
 
   render() {
-    return repeat(this.sections, (item) => item.id, (item, index) => {
+    // console.log('Sections render', this.sections[2].image)
+    // return repeat(this.sections, (item) => item.id, (item, index) => {
+    return this.sections.map((item, index) => {
       switch (item['@strife'].template) {
         case 'hero':
           return html`

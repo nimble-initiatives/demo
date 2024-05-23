@@ -1,12 +1,25 @@
 import { LitElement, html, css, unsafeCSS, nothing } from 'lit';
-import { render as renderPicture } from '@strifeapp/picture';
+// import { render as renderPicture } from '@strifeapp/picture';
+import { render as renderPicture } from '/Users/marcus/Projects/private/strife.nosync/wieldy/src/sdk/js/src/packages/picture/index.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
+import {ref, createRef} from 'lit/directives/ref.js';
 import sheet from '../../styles/global.css?inline' assert { type: 'css' };
+
+const ensureHttps = (url) => {
+  if (!url.startsWith('http://') && !url.startsWith('https://') && !url.startsWith('//')) {
+    return 'https://' + url;
+  } else if (url.startsWith('//')) {
+    return 'https:' + url;
+  }
+  return url;
+}
 
 export default class Content extends LitElement {
   #video;
   #picture;
+  #image;
+  inputRef = createRef();
   static styles = [
     css`
       ${unsafeCSS(sheet)}
@@ -58,9 +71,30 @@ export default class Content extends LitElement {
   firstUpdated() {
     this.#video = this.shadowRoot.querySelector('video');
     this.#picture = this.shadowRoot.querySelector('picture');
+    this.#image = this.shadowRoot.querySelector('img');
+
+    console.log('firstUpdated', this.#image.dataset.propertyMedia, window.name);
+    // renderPicture(this.#picture, this.image);
+  }
+
+  // shouldUpdate(changedProperties) {
+  //   return hasRequiredProperties(changedProperties.get('image'));
+  // }
+
+  willUpdate(changedProperties) {
+    // render new and old value, the the old value is the reactive property in this case
+    // changedProperties.forEach((oldValue, prop) => {
+    //   if (prop === 'image') {
+    //     console.group('image changed');
+    //     console.log(`oldValue:`, oldValue);
+    //     console.log(`newValue:`, this[prop]);
+    //     console.groupEnd();
+    //   }
+    // });
   }
 
   updated(changedProperties) {
+
     if (changedProperties.get('video')?.playing !== this.video?.playing ||
       changedProperties.get('video')?.url !== this.video?.url ||
       changedProperties.get('video')?.loop !== this.video?.loop ||
@@ -68,9 +102,11 @@ export default class Content extends LitElement {
       changedProperties.get('video')?.poster?.source?.url !== this.video?.poster?.source?.url) {
       this.#video?.load();
     }
-    if(changedProperties.get('image')) {
-      renderPicture(this.#picture, this.image);
-    }
+
+    console.log('updated', this.#image.dataset.propertyMedia, window.name);
+
+    renderPicture(this.#picture, this.image);
+
   }
 
   render() {
@@ -96,20 +132,20 @@ export default class Content extends LitElement {
     })}
       >
       ${!this.video?.__media ? html`
-        <picture>
-          <source srcset="${this.image?.mobile?.source.url}"
-                  media="(max-width: 500px)"
-                  width="600" height="300"
-                  data-property-media="mobile">
-          <source srcset="${this.image?.tablet?.source.url}"
-                  media="(max-width: 861px) and (min-width: 501px)"
-                  width="728" height="364"
-                  data-property-media="tablet">
-          <source srcset="${this.image?.desktop?.source.url}"
-                  media="(min-width: 862px)"
-                  width="716" height="537"
-                  data-property-media="desktop">
-          <img src="${this.image?.desktop?.source.url}" loading="lazy" alt="" width="716" height="537" class="w-full block rounded-2xl aspect-2/1 lg:aspect-4/3 object-cover">
+        <picture ${ref(this.inputRef)}>
+          <source srcset="${ensureHttps(this.image?.mobile?.source.url)}"
+            media="(max-width: 500px)"
+            width="600" height="300"
+            data-property-media="mobile">
+          <source srcset="${ensureHttps(this.image?.tablet?.source.url)}"
+            media="(min-width: 501px) and (max-width: 861px)"
+            width="728" height="364"
+            data-property-media="tablet">
+          <source srcset="${ensureHttps(this.image?.desktop?.source.url)}"
+            media="(min-width: 862px)"
+            width="716" height="537"
+            data-property-media="desktop">
+          <img src="${ensureHttps(this.image?.desktop?.source.url)}" alt="" width="716" height="537">
       </picture>
       ` : ''}
 
@@ -131,6 +167,7 @@ export default class Content extends LitElement {
 </section>
     `;
   }
+
 }
 
 customElements.define('poc-content', Content);

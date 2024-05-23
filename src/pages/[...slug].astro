@@ -1,17 +1,29 @@
 ---
 import store from '@/store/index';
-import PostLayout from '@/layouts/PostLayout.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Sections from '@/components/poc/Sections.js';
 
 const session = store.openSession();
 
-const post = await session
+const page = await session
   .query({ indexName: 'Content/ByUrl' })
   .whereEquals('url', Astro.url.pathname.replace(/\/$/, '')) // remove trailing slash
   .firstOrNull();
-
 ---
-<PostLayout post={post} />
-<script>
-  import { ready } from "@strifeapp/strife";
-  ready();
-</script>
+
+<BaseLayout>
+  {
+    (page?.sections && <Sections sections={page.sections} client:load />) || (
+      <section class="my-16 md:my-20 lg:my-28">
+        <div class="container">
+          <div class="prose">
+            <h2>Här är din tomma sida, skapa lite innehåll vet ja</h2>
+            <p>
+              Sidan du besöker är ny och saknar innehåll. Kanske är det dags att skapa något?
+            </p>
+          </div>
+        </div>
+      </section>
+    )
+  }
+</BaseLayout>
