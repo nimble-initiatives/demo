@@ -3,12 +3,22 @@ import store from "@/store/index";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Sections from "@/components/poc/Sections.js";
 
+const isInPreviewMode = new URLSearchParams(Astro.url.search).has("token");
+
 // Get the home page content
 const session = store.openSession();
-const home = await session
+
+let home = await session
   .query({ indexName: "Content/ByUrl" })
   .whereEquals("url", Astro.url.pathname)
   .firstOrNull();
+
+if(isInPreviewMode) {
+  const draft = await session.load(home.id + '/draft');
+  if(draft) {
+    home = { ...home, ...(({'@metadata': _, ...rest}) => rest)(draft) };
+  }
+}
 
 if(home.sections.some((section) => section["@strife"].template === "nyheter")) {
   const news = await session.advanced.rawQuery(

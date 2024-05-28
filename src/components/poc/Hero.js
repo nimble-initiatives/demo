@@ -35,13 +35,20 @@ export default class Hero extends LitElement {
   }
 
   updated(changedProperties) {
+    // if(changedProperties.get('video')?.playing !== this.video?.playing ||
+    //   changedProperties.get('video')?.url !== this.video?.url ||
+    //   changedProperties.get('video')?.loop !== this.video?.loop ||
+    //   changedProperties.get('video')?.startTime !== this.video?.startTime ||
+    //   changedProperties.get('video')?.poster?.source?.url !== this.video?.poster?.source?.url) {
+    //   this.#video?.load();
+    // }
     if(changedProperties.get('video')?.playing !== this.video?.playing ||
-      changedProperties.get('video')?.url !== this.video?.url ||
-      changedProperties.get('video')?.loop !== this.video?.loop ||
-      changedProperties.get('video')?.startTime !== this.video?.startTime ||
-      changedProperties.get('video')?.poster?.source?.url !== this.video?.poster?.source?.url) {
-      this.#video?.load();
+    changedProperties.get('video')?.startTime !== this.video?.startTime) {
+    const videoElement = this.renderRoot.querySelector('video');
+    if(videoElement) {
+      videoElement.load();
     }
+  }
   }
 
   render() {
@@ -69,10 +76,8 @@ export default class Hero extends LitElement {
       "items-center": this.align === "center",
     })}
       >
-      <h1 class="text-2xl md:text-4xl lg:text-7xl font-bold mb-2 max-w-4xl">
-        ${this.heading}
-      </h1>
-      <p class="max-w-2xl text-lg mb-7">${this.text}</p>
+      <h1 class="text-2xl md:text-4xl lg:text-7xl font-bold mb-2 max-w-4xl" data-placeholder="Här kan vi skriva en placeholder-text">${this.heading}</h1>
+      <p class="max-w-2xl text-lg mb-7" data-placeholder="Här kan vi skriva en placeholder-text">${this.text}</p>
       ${this.cta?.text && this.cta?.href ? html`
       <p class="max-w-2xl">
         <a
@@ -85,12 +90,12 @@ export default class Hero extends LitElement {
     </div>
   </div>
 
-  ${this.image?.source.url && !this.video?.__media ? html`
-    <img src="${this.image.source.url}" alt="Golf image" class="w-full h-full object-cover" width="1366" height="768" />
+  ${!this.video?.__media ? html`
+    <img src="${this.image?.source.url}" alt="Golf image" class="w-full h-full object-cover" width="1366" height="768" />
   ` : ''}
 
   ${this.video?.__media ? html`
-    <video class="w-full h-full object-cover" playsinline ?controls=${this.video?.controls} muted ?loop=${this.video?.loop} ?autoplay=${this.video?.playing}>
+    <video class="w-full h-full object-cover" playsinline ?controls=${this.video?.controls} muted ?loop=${this.video?.loop} ?autoplay=${this.video?.playing} poster=${this.video?.poster?.source.url ?? nothing}>
       <source src="${this.video.url}#t=${this.video.startTime}" type="video/mp4" />
     </video>
   ` : ''}

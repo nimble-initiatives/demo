@@ -23,12 +23,12 @@ export default class News extends LitElement {
         <div class="container">
           <h2 class="font-bold text-2xl md:text-3xl lg:text-4xl mb-6">${this.heading}</h2>
           <div
-            class="w-full grid grid-cols-12 auto-rows-max gap-y-10 lg:gap-x-12 row-span"
+            class="w-full grid grid-cols-12 auto-rows-max gap-y-10 md:gap-x-12 lg:gap-x-12 row-span"
           >
             ${
               this.items?.map((item, index) => {
                 return html`
-                  <div class="col-span-full lg:col-span-4">
+                  <div class="col-span-full md:col-span-6 lg:col-span-4">
                   <picture>
                     <source srcset="${item.image?.tabletList?.source?.url}"
                             media="(max-width: 1024px)"

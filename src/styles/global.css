@@ -39,6 +39,9 @@
   --astro-code-token-punctuation: #ffffff;
   --astro-code-token-link: #ffffff;
 
+  --str-placeholder-text-opacity: 0.3;
+  --str-placeholder-background-color: #0099ff;
+  --str-placeholder-background-opacity: 0.8;
 }
 
 body,
@@ -54,4 +57,39 @@ details {
   & > summary {
     @apply font-bold underline underline-offset-4 hover:no-underline cursor-pointer;
   }
+}
+
+:where(div:empty)::before {
+  color: inherit;
+
+  opacity: var(--str-placeholder-text-opacity);
+
+  content: attr(data-placeholder);
+}
+
+:where(h1:empty)::before {
+  color: inherit;
+
+  opacity: var(--str-placeholder-text-opacity);
+
+  content: attr(data-placeholder);
+}
+
+:where(p:empty)::before {
+  color: inherit;
+
+  opacity: var(--str-placeholder-text-opacity);
+
+  content: attr(data-placeholder);
+}
+
+img[src=""] {
+  background-image: repeating-linear-gradient(45deg, var(--str-placeholder-background-color) 0, transparent 1px, transparent 0, transparent 50%);
+  background-repeat: repeat;
+  background-position: 0 0;
+  background-size: 15px 15px;
+  outline: solid 1px var(--str-placeholder-background-color);
+  opacity: var(--str-placeholder-background-opacity);
+  position: relative;
+  text-indent: 100vw;
 }

@@ -1,14 +1,21 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, css, unsafeCSS } from 'lit';
 import { repeat } from 'lit/directives/repeat.js';
-import { subscribe, ready } from '/Users/marcus/Projects/private/strife.nosync/wieldy/src/sdk/js/src/packages/strife/index.js';
+// import { subscribe, ready } from '/Users/marcus/Projects/private/strife.nosync/wieldy/src/sdk/js/src/packages/strife/index.js';
 import './Hero.js';
 import './Toc.js';
 import './Content.js';
 import './News.js';
 import './Bento.js';
 import './RichText.js';
+import sheet from '../../styles/global.css?inline' assert { type: 'css' };
 
 export default class Sections extends LitElement {
+
+  static styles = [
+    css`
+      ${unsafeCSS(sheet)}
+    `,
+  ];
 
   static properties = {
     sections: { type: Array },
@@ -20,15 +27,14 @@ export default class Sections extends LitElement {
   }
 
   firstUpdated() {
-    console.log('Sections firstUpdated');
-    this.unsubscribe = subscribe((data) => this.sections = [...data.sections]);
-    ready();
-    // import('@strifeapp/strife').then((strife) => {
-    //   this.unsubscribe = strife.subscribe((data) => {
-    //     this.sections = data.sections;
-    //   });
-    //   strife.ready();
-    // });
+    // this.unsubscribe = subscribe((data) => this.sections = [...data.sections]);
+    // ready();
+    import('@strifeapp/strife').then((strife) => {
+      this.unsubscribe = strife.subscribe((data) => {
+        this.sections = data.sections;
+      });
+      strife.ready();
+    });
   }
 
 
@@ -39,9 +45,7 @@ export default class Sections extends LitElement {
   }
 
   render() {
-    // console.log('Sections render', this.sections[2].image)
-    // return repeat(this.sections, (item) => item.id, (item, index) => {
-    return this.sections.map((item, index) => {
+    return repeat(this.sections, (item) => item.id, (item, index) => {
       switch (item['@strife'].template) {
         case 'hero':
           return html`
