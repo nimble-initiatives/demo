@@ -15,7 +15,7 @@ let home = await session
 
 if(isInPreviewMode) {
   const draft = await session.load(home.id + '/draft');
-  if(draft) {
+  if(draft && !draft.deleted) {
     home = { ...home, ...(({'@metadata': _, ...rest}) => rest)(draft) };
   }
 }

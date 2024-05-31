@@ -14,7 +14,7 @@ let page = await session
 
 if(isInPreviewMode) {
   const draft = await session.load(page.id + '/draft');
-  if(draft) {
+  if(draft && !draft.deleted) {
     page = { ...page, ...(({'@metadata': _, ...rest}) => rest)(draft) };
   }
 }

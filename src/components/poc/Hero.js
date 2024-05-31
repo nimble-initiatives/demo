@@ -3,8 +3,6 @@ import { classMap } from 'lit/directives/class-map.js';
 import sheet from '../../styles/global.css?inline' assert { type: 'css' };
 
 export default class Hero extends LitElement {
-  #video;
-  #image;
   static styles = css`
     ${unsafeCSS(sheet)}
   `;
@@ -16,7 +14,7 @@ export default class Hero extends LitElement {
     size: { type: String },
     align: { type: String },
     video: { type: Object },
-    image: { type: String }
+    image: { type: Object }
   };
 
   constructor() {
@@ -27,7 +25,7 @@ export default class Hero extends LitElement {
     this.size = "small";
     this.align = "center";
     this.video = {};
-    this.image = '';
+    this.image = {};
   }
 
   firstUpdated() {
@@ -35,20 +33,13 @@ export default class Hero extends LitElement {
   }
 
   updated(changedProperties) {
-    // if(changedProperties.get('video')?.playing !== this.video?.playing ||
-    //   changedProperties.get('video')?.url !== this.video?.url ||
-    //   changedProperties.get('video')?.loop !== this.video?.loop ||
-    //   changedProperties.get('video')?.startTime !== this.video?.startTime ||
-    //   changedProperties.get('video')?.poster?.source?.url !== this.video?.poster?.source?.url) {
-    //   this.#video?.load();
-    // }
     if(changedProperties.get('video')?.playing !== this.video?.playing ||
-    changedProperties.get('video')?.startTime !== this.video?.startTime) {
-    const videoElement = this.renderRoot.querySelector('video');
-    if(videoElement) {
-      videoElement.load();
+      changedProperties.get('video')?.startTime !== this.video?.startTime) {
+      const videoElement = this.renderRoot.querySelector('video');
+      if(videoElement) {
+        videoElement.load();
+      }
     }
-  }
   }
 
   render() {

@@ -1,6 +1,6 @@
 import { LitElement, html, css, unsafeCSS } from 'lit';
 import { repeat } from 'lit/directives/repeat.js';
-// import { subscribe, ready } from '/Users/marcus/Projects/private/strife.nosync/wieldy/src/sdk/js/src/packages/strife/index.js';
+import { subscribe, ready } from '@strifeapp/strife';
 import './Hero.js';
 import './Toc.js';
 import './Content.js';
@@ -27,14 +27,8 @@ export default class Sections extends LitElement {
   }
 
   firstUpdated() {
-    // this.unsubscribe = subscribe((data) => this.sections = [...data.sections]);
-    // ready();
-    import('@strifeapp/strife').then((strife) => {
-      this.unsubscribe = strife.subscribe((data) => {
-        this.sections = data.sections;
-      });
-      strife.ready();
-    });
+    this.unsubscribe = subscribe((data) => this.sections = [...data.sections]);
+    ready();
   }
 
 
