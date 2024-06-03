@@ -1,4 +1,5 @@
-import { LitElement, html, css, unsafeCSS } from 'lit';
+import { LitElement, css, unsafeCSS } from 'lit';
+import { html, literal } from 'lit/static-html.js';
 import { classMap } from 'lit/directives/class-map.js';
 import sheet from '../../styles/global.css?inline' assert { type: 'css' };
 
@@ -26,8 +27,9 @@ export default class Bento extends LitElement {
           <div class="w-full grid grid-cols-12 auto-rows-max gap-5 row-span">
             ${
               this.items?.map((item, index) => {
+                const tag = item.link ? literal`a` : literal`div`;
                 return html`
-                <div
+                <${tag} .href="${item.link?.href}"
                   class=${classMap({
                     'relative rounded-xl col-span-12 p-10 pt-52': true,
                     'col-span-full': true,
@@ -41,7 +43,7 @@ export default class Bento extends LitElement {
                   <div class="absolute bottom-0 left-0 right-0 top-0 bg-zinc-900 bg-opacity-75 rounded-xl -z-10"></div>
                   <h3 class="text-2xl font-bold mb-3 text-white">${item.heading}</h3>
                   <p class="text-white">${item.text}</p>
-                </div>`
+                </${tag}>`
               })
             }
           </div>

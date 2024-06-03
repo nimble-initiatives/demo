@@ -3,6 +3,7 @@ import { classMap } from 'lit/directives/class-map.js';
 import sheet from '../../styles/global.css?inline' assert { type: 'css' };
 
 export default class Hero extends LitElement {
+  #video;
   static styles = css`
     ${unsafeCSS(sheet)}
   `;
