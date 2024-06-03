@@ -27,7 +27,9 @@ export default class Sections extends LitElement {
   }
 
   firstUpdated() {
-    this.unsubscribe = subscribe((data) => this.sections = [...data.sections]);
+    this.unsubscribe = subscribe((data) => {
+      this.sections = data.sections;
+    });
     ready();
   }
 
