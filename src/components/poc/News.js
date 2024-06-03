@@ -1,4 +1,5 @@
 import { LitElement, html, css, unsafeCSS } from 'lit';
+import { repeat } from 'lit/directives/repeat.js';
 import sheet from '../../styles/global.css?inline' assert { type: 'css' };
 
 export default class News extends LitElement {
@@ -26,7 +27,7 @@ export default class News extends LitElement {
             class="w-full grid grid-cols-12 auto-rows-max gap-y-10 md:gap-x-12 lg:gap-x-12 row-span"
           >
             ${
-              this.items?.map((item, index) => {
+              repeat(this.items ?? [], (item) => item.id, (item, index) => {
                 return html`
                   <div class="col-span-full md:col-span-6 lg:col-span-4">
                   <picture>
