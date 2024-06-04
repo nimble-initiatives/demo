@@ -93,3 +93,14 @@ img[src=""] {
   position: relative;
   text-indent: 100vw;
 }
+
+:where(video),
+:where(iframe) {
+  max-inline-size: 100%;
+  block-size: auto;
+  aspect-ratio: 16/9;
+  object-fit:contain;
+  object-position: top center;
+  margin-block: 3rem;
+  border: none;
+}
