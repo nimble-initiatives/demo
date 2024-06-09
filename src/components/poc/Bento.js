@@ -20,9 +20,19 @@ export default class Bento extends LitElement {
     this.items = [];
   }
 
+  connectedCallback() {
+    super.connectedCallback();
+    globalThis.tocRoots.add(this.shadowRoot);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    globalThis.tocRoots.delete(this.shadowRoot);
+  }
+
   render() {
     return html`
-      <section class="my-16 md:my-20 lg:my-28">
+      <section .id=${this.id} class="my-16 md:my-20 lg:my-28">
         <div class="container">
           <div class="w-full grid grid-cols-12 auto-rows-max gap-5 row-span">
             ${

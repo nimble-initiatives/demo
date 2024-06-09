@@ -43,9 +43,20 @@ export default class Hero extends LitElement {
     }
   }
 
+  connectedCallback() {
+    super.connectedCallback();
+    globalThis.tocRoots.add(this.shadowRoot);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    globalThis.tocRoots.delete(this.shadowRoot);
+  }
+
   render() {
     return html`
       <section
+        .id=${this.id}
         class=${classMap({
           "relative": true,
           "text-white": true,

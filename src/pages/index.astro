@@ -26,8 +26,24 @@ if(home.sections.some((section) => section["@strife"].template === "nyheter")) {
   ).all();
   home.sections.find((section) => section["@strife"].template === "nyheter").content.documents = news;
 }
----
 
+
+---
+<script>
+  globalThis.tocRoots = new Set();
+  globalThis.addEventListener("hashchange", (event) => {
+    const hash = location.hash;
+    if (hash) {
+      for (const root of globalThis.tocRoots) {
+        const navTo = root.querySelector(hash);
+        if (navTo) {
+          navTo.scrollIntoView();
+          return;
+        }
+      }
+    }
+  });
+</script>
 <BaseLayout>
   <Sections sections={home.sections} client:load />
 </BaseLayout>

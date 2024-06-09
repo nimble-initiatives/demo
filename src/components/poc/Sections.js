@@ -31,9 +31,8 @@ export default class Sections extends LitElement {
       this.sections = data.sections;
     });
     ready();
+
   }
-
-
 
   disconnectedCallback() {
     super.disconnectedCallback();
@@ -46,6 +45,7 @@ export default class Sections extends LitElement {
         case 'hero':
           return html`
             <hero-chapter
+              .id="test-${index}"
               heading="${item.heading}"
               text="${item.text}"
               .cta=${item.cta}
@@ -60,6 +60,7 @@ export default class Sections extends LitElement {
         case 'innehall':
           return html`
             <poc-content
+              .id="test-${index}"
               .text=${item.text}
               .image=${item.image}
               .video=${item.video}
@@ -68,11 +69,11 @@ export default class Sections extends LitElement {
             ></poc-content>
           `;
         case 'nyheter':
-          return html`<poc-news heading=${item.heading} .items=${item.content?.documents}></poc-news>`;
+          return html`<poc-news .id="test-${index}" heading=${item.heading} .items=${item.content?.documents}></poc-news>`;
         case 'bento':
-          return html`<poc-bento .style=${Number(item.style)} .items=${item.items}></poc-bento>`;
+          return html`<poc-bento .id="test-${index}" .style=${Number(item.style)} .items=${item.items}></poc-bento>`;
         case 'text':
-          return html`<poc-rich-text align="${item.align}" .background=${!!+item.background} .text=${item.content}></poc-rich-text>`;
+          return html`<poc-rich-text .id="test-${index}" align="${item.align}" .background=${!!+item.background} .text=${item.content}></poc-rich-text>`;
         default:
           return html`<p>Template not found: ${item['@strife'].template}</p>`;
       }

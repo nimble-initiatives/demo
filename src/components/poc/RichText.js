@@ -21,9 +21,19 @@ export default class RichText extends LitElement {
     this.text = '';
   }
 
+  connectedCallback() {
+    super.connectedCallback();
+    globalThis.tocRoots.add(this.shadowRoot);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    globalThis.tocRoots.delete(this.shadowRoot);
+  }
+
   render() {
     return html`
-      <section class=${classMap({
+      <section .id=${this.id} class=${classMap({
         'py-16': this.background,
         'md:py-20': this.background,
         'lg:py-28': this.background,

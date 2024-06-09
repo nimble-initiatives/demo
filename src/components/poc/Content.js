@@ -51,9 +51,20 @@ export default class Content extends LitElement {
     renderPreview(this.#picture, this.image);
   }
 
+  connectedCallback() {
+    super.connectedCallback();
+    globalThis.tocRoots.add(this.shadowRoot);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    globalThis.tocRoots.delete(this.shadowRoot);
+  }
+
   render() {
     return html`
       <section
+        .id=${this.id}
         class=${classMap({
       'py-16': this.background,
       'md:py-20': this.background,
