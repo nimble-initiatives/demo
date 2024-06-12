@@ -1,9 +1,12 @@
 import { LitElement, html, css, unsafeCSS, nothing } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
+import { preview as renderPreview, update as preparePreview } from '@strifeapp/picture';
 import sheet from '../../styles/global.css?inline' assert { type: 'css' };
 
 export default class Hero extends LitElement {
   #video;
+  #picture;
+
   static styles = css`
     ${unsafeCSS(sheet)}
   `;
@@ -31,6 +34,7 @@ export default class Hero extends LitElement {
 
   firstUpdated() {
     this.#video = this.shadowRoot.querySelector('video');
+    this.#picture = this.shadowRoot.querySelector('picture');
   }
 
   updated(changedProperties) {
@@ -41,6 +45,9 @@ export default class Hero extends LitElement {
         videoElement.load();
       }
     }
+
+    preparePreview(this.#picture, this.image);
+    renderPreview(this.#picture, this.image);
   }
 
   connectedCallback() {
@@ -94,7 +101,21 @@ export default class Hero extends LitElement {
   </div>
 
   ${!this.video?.__media ? html`
-    <img src="${this.image?.source.url}" alt="Golf image" class="w-full h-full object-cover" width="1366" height="768" />
+    <picture>
+      <source srcset="${this.image?.mobile?.source?.url}"
+              media="(max-width: 400px)"
+              width="400" height="500"
+              data-property-media="mobile">
+      <source srcset="${this.image?.tablet?.source?.url}"
+              media="(min-width: 401px) and (max-width: 860px)"
+              width="860" height="500"
+              data-property-media="tablet">
+      <source srcset="${this.image?.desktop?.source?.url}"
+              media="(min-width: 861px)"
+              width="1366" height="500"
+              data-property-media="desktop">
+      <img src="${this.image?.desktop?.source?.url}" loading="lazy" alt="" width="1366" height="500" class="w-full h-full object-cover">
+  </picture>
   ` : ''}
 
   ${this.video?.__media ? html`
