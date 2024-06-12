@@ -20,7 +20,21 @@ if(isInPreviewMode) {
 }
 
 ---
-
+<script>
+  globalThis.tocRoots = new Set();
+  globalThis.addEventListener("hashchange", (event) => {
+    const hash = location.hash;
+    if (hash) {
+      for (const root of globalThis.tocRoots) {
+        const navTo = root.querySelector(hash);
+        if (navTo) {
+          navTo.scrollIntoView();
+          return;
+        }
+      }
+    }
+  });
+</script>
 <BaseLayout>
   <Sections sections={page?.sections ?? []} client:load />
 </BaseLayout>

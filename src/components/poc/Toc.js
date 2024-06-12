@@ -34,7 +34,14 @@ export default class Toc extends LitElement {
           <div class="bg-zinc-200 p-5 md:p-10 max-w-5xl">
             <p class="font-bold text-xl md:text-2xl lg:text-3xl">${this.heading}</p>
             <ol class="mt-5 space-y-2" id="toc">
-              ${[...this.items].sort((a, b) => a.id.localeCompare(b.id) ).map(item => html`
+              ${[...this.items].sort((a, b) => {
+                // Extract numeric parts from strings
+                const numA = parseInt(a.id.match(/\d+/)[0], 10);
+                const numB = parseInt(b.id.match(/\d+/)[0], 10);
+
+                // Compare the numeric values
+                return numA - numB;
+               }).map(item => html`
                 <li><a href="#${item.id}">${item.text}</a></li>
               `)}
             </ol>
