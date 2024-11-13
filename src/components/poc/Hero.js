@@ -1,11 +1,8 @@
 import { LitElement, html, css, unsafeCSS, nothing } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
-import { preview as renderPreview, update as preparePreview } from '@strifeapp/picture';
 import sheet from '../../styles/global.css?inline' assert { type: 'css' };
 
 export default class Hero extends LitElement {
-  #video;
-  #picture;
 
   static styles = css`
     ${unsafeCSS(sheet)}
@@ -32,11 +29,6 @@ export default class Hero extends LitElement {
     this.image = {};
   }
 
-  firstUpdated() {
-    this.#video = this.shadowRoot.querySelector('video');
-    this.#picture = this.shadowRoot.querySelector('picture');
-  }
-
   updated(changedProperties) {
     if(changedProperties.get('video')?.playing !== this.video?.playing ||
       changedProperties.get('video')?.startTime !== this.video?.startTime) {
@@ -45,9 +37,6 @@ export default class Hero extends LitElement {
         videoElement.load();
       }
     }
-
-    preparePreview(this.#picture, this.image);
-    renderPreview(this.#picture, this.image);
   }
 
   connectedCallback() {

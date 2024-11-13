@@ -1,14 +1,9 @@
 import { LitElement, html, css, unsafeCSS, nothing } from 'lit';
-// import { preview as renderPreview, update as preparePreview } from '/Users/marcus/Projects/private/strife.nosync/wieldy/src/sdk/js/src/packages/picture/index.js';
-// import { preview as renderPreview } from '/Users/marcus/Projects/private/strife.nosync/wieldy/src/sdk/js/src/packages/picture/index.js';
-import { preview as renderPreview, update as preparePreview } from '@strifeapp/picture';
 import { classMap } from 'lit/directives/class-map.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import sheet from '../../styles/global.css?inline' assert { type: 'css' };
 
 export default class Content extends LitElement {
-
-  #picture;
 
   static styles = [
     css`
@@ -33,12 +28,7 @@ export default class Content extends LitElement {
     this.background = false;
   }
 
-  firstUpdated() {
-    this.#picture = this.shadowRoot.querySelector('picture');
-  }
-
   updated(changedProperties) {
-
     if(changedProperties.get('video')?.playing !== this.video?.playing ||
       changedProperties.get('video')?.startTime !== this.video?.startTime) {
       const videoElement = this.renderRoot.querySelector('video');
@@ -46,9 +36,6 @@ export default class Content extends LitElement {
         videoElement.load();
       }
     }
-
-    preparePreview(this.#picture, this.image);
-    renderPreview(this.#picture, this.image);
   }
 
   connectedCallback() {
