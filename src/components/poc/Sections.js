@@ -82,8 +82,6 @@ export default class Sections extends LitElement {
 
   firstUpdated() {
     this.unsubscribe = subscribe((data) => {
-      const changes = deepEqualWithChanges(this.sections, data.sections);
-      console.warn('data changed', changes);
       this.sections = data.sections;
     });
   }
