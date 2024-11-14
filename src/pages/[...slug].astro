@@ -2,7 +2,7 @@
 import store from '@/store/index';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Sections from '@/components/poc/Sections.js';
-
+import Feedback from '@/components/poc/Feedback.svelte';
 const isInPreviewMode = new URLSearchParams(Astro.url.search).has("token");
 
 const session = store.openSession();
@@ -37,4 +37,7 @@ if(isInPreviewMode) {
 </script>
 <BaseLayout>
   <Sections sections={page?.sections ?? []} client:load />
+  <div class="container">
+    <Feedback documentId={page?.id} client:load />
+  </div>
 </BaseLayout>

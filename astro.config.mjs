@@ -4,10 +4,12 @@ import tailwind from "@astrojs/tailwind";
 import lit from "@astrojs/lit";
 import vercel from "@astrojs/vercel/serverless";
 
+import svelte from '@astrojs/svelte';
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://sgf.strife.site',
-  integrations: [tailwind(), lit()],
+  integrations: [tailwind(), lit(), svelte()],
   output: "server",
   server: {
     port: 4322
