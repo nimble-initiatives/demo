@@ -51,9 +51,7 @@ export default class Sections extends LitElement {
               .image=${item.image}
             ></hero-chapter>
           `;
-        case 'innehallsfortackning':
-          return html`<poc-toc heading="${item.heading}"></poc-toc>`;
-        case 'innehall':
+        case 'content':
           return html`
             <poc-content
               .id="test-${index}"
