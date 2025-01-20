@@ -3,7 +3,6 @@ import { repeat } from 'lit/directives/repeat.js';
 import { subscribe } from '@strifeapp/strife';
 import './Hero.js';
 import './Content.js';
-import './News.js';
 import './Bento.js';
 import './RichText.js';
 import sheet from '../../styles/global.css?inline' assert { type: 'css' };
@@ -65,8 +64,6 @@ export default class Sections extends LitElement {
               .background=${!!+item.background}
             ></poc-content>
           `;
-        case 'nyheter':
-          return html`<poc-news .id="test-${index}" heading=${item.heading} .items=${item.content?.documents}></poc-news>`;
         case 'bento':
           return html`<poc-bento .id="test-${index}" .style=${Number(item.style)} .items=${item.items}></poc-bento>`;
         case 'text':
