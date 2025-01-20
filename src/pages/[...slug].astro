@@ -2,42 +2,22 @@
 import store from '@/store/index';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Sections from '@/components/poc/Sections.js';
-import Feedback from '@/components/poc/Feedback.svelte';
-const isInPreviewMode = new URLSearchParams(Astro.url.search).has("token");
+
+interface Article {
+  sections: any;
+}
 
 const session = store.openSession();
 
-let page = await session
-  .query({ indexName: 'Content/ByUrl' })
-  .whereEquals('url', Astro.url.pathname.replace(/\/$/, '')) // remove trailing slash
-  .firstOrNull();
+let article: Article = await session
+  .query<Article>({ indexName: 'Content/ByUrl' })
+  .whereEquals('url', Astro.url.pathname)
+  .singleOrNull();
 
-if(isInPreviewMode) {
-  const draft = await session.load(page.id + '/draft');
-  if(draft && !draft.deleted) {
-    page = { ...page, ...(({'@metadata': _, ...rest}) => rest)(draft) };
-  }
+if(!article) {
+  Astro.redirect('/404');
 }
-
 ---
-<script>
-  globalThis.tocRoots = new Set();
-  globalThis.addEventListener("hashchange", (event) => {
-    const hash = location.hash;
-    if (hash) {
-      for (const root of globalThis.tocRoots) {
-        const navTo = root.querySelector(hash);
-        if (navTo) {
-          navTo.scrollIntoView();
-          return;
-        }
-      }
-    }
-  });
-</script>
 <BaseLayout>
-  <Sections sections={page?.sections ?? []} client:load />
-  <div class="container">
-    <Feedback documentId={page?.id} client:load />
-  </div>
+  <Sections {...article} client:load />
 </BaseLayout>

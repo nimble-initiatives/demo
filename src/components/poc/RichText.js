@@ -21,16 +21,6 @@ export default class RichText extends LitElement {
     this.text = '';
   }
 
-  connectedCallback() {
-    super.connectedCallback();
-    globalThis.tocRoots.add(this.shadowRoot);
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback();
-    globalThis.tocRoots.delete(this.shadowRoot);
-  }
-
   render() {
     return html`
       <section .id=${this.id} class=${classMap({

@@ -20,16 +20,6 @@ export default class Bento extends LitElement {
     this.items = [];
   }
 
-  connectedCallback() {
-    super.connectedCallback();
-    globalThis.tocRoots.add(this.shadowRoot);
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback();
-    globalThis.tocRoots.delete(this.shadowRoot);
-  }
-
   render() {
     return html`
       <section .id=${this.id} class="my-16 md:my-20 lg:my-28">

@@ -3,47 +3,21 @@ import store from "@/store/index";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Sections from "@/components/poc/Sections.js";
 
-const isInPreviewMode = new URLSearchParams(Astro.url.search).has("token");
+interface Home {
+  id: string;
+  sections: any;
+  deleted: boolean;
+  '@metadata': any;
+}
 
 // Get the home page content
 const session = store.openSession();
 
-let home = await session
-  .query({ indexName: "Content/ByUrl" })
+let home: Home = await session
+  .query<Home>({ indexName: "Content/ByUrl" })
   .whereEquals("url", Astro.url.pathname)
-  .firstOrNull();
-
-if(isInPreviewMode) {
-  const draft = await session.load(home.id + '/draft');
-  if(draft && !draft.deleted) {
-    home = { ...home, ...(({'@metadata': _, ...rest}) => rest)(draft) };
-  }
-}
-
-if(home.sections.some((section) => section["@strife"].template === "nyheter")) {
-  const news = await session.advanced.rawQuery(
-    home.sections.find((section) => section["@strife"].template === "nyheter").content.query
-  ).all();
-  home.sections.find((section) => section["@strife"].template === "nyheter").content.documents = news;
-}
-
-
+  .singleOrNull();
 ---
-<script>
-  globalThis.tocRoots = new Set();
-  globalThis.addEventListener("hashchange", (event) => {
-    const hash = location.hash;
-    if (hash) {
-      for (const root of globalThis.tocRoots) {
-        const navTo = root.querySelector(hash);
-        if (navTo) {
-          navTo.scrollIntoView();
-          return;
-        }
-      }
-    }
-  });
-</script>
 <BaseLayout>
-  <Sections sections={home.sections} client:load />
+  <Sections {...home} client:load />
 </BaseLayout>
