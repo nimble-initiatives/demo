@@ -1,4 +1,5 @@
-# Astro & Tailwind CSS Starter Kit by lexingtonthemes.com
+# Getting started Strife demo 
+Forked from Astro & Tailwind CSS Starter Kit by lexingtonthemes.com
 
 ## Template Integrations
 - @astrojs/tailwind - https://docs.astro.build/en/guides/integrations-guide/tailwind/
